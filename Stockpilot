@@ -1,0 +1,350 @@
+Project: StockPilot – Inventory and Order Management System
+
+1. Project Overview
+
+Build a fully functional Inventory and Order Management System that allows customers to browse products, manage shopping carts, and place orders, while administrators manage products, inventory, customers, and order fulfilment.
+
+The objective of this project is to assess your ability to build a real-world React application, integrate backend services, solve logical problems, write maintainable code, and implement feedback effectively.
+
+This is not just a UI development task. You are expected to demonstrate independent problem-solving and an understanding of the systems you build.
+
+2. User Roles
+
+A. Customer Dashboard
+
+Customers should be able to:
+
+- Register and log in.
+- Browse available products.
+- Search and filter products by name, category, price, and availability.
+- View detailed product information.
+- Add products to a shopping cart.
+- Increase or decrease product quantities.
+- Remove products from the cart.
+- View cart subtotal, discounts, delivery fees, and final total.
+- Place orders.
+- View their order history.
+- Track the status of their orders.
+- View their profile information.
+
+B. Admin Dashboard
+
+Administrators should be able to:
+
+- View total products, orders, revenue, and low-stock products.
+- Create, edit, and delete products.
+- Manage product categories.
+- Update product prices and descriptions.
+- Adjust inventory quantities.
+- View all customer orders.
+- View individual order details.
+- Update order statuses.
+- View inventory movement history.
+- Generate basic sales and inventory reports.
+
+3. Core Functional Requirements
+
+A. Product Management
+
+Implement complete CRUD functionality for products.
+
+Each product should contain:
+
+- Product name.
+- Description.
+- Price.
+- Category.
+- Product image.
+- Available stock quantity.
+- Minimum stock threshold.
+- Date created.
+
+Implement search, filtering, and pagination where appropriate.
+
+B. Shopping Cart
+
+Implement a functional shopping cart.
+
+Requirements:
+
+- Add products to the cart.
+- Remove products from the cart.
+- Update product quantities.
+- Automatically calculate subtotal.
+- Apply discounts where applicable.
+- Calculate delivery fees.
+- Calculate the final order total.
+- Prevent customers from adding quantities greater than available stock.
+
+Cart state should be managed appropriately using Zustand.
+
+C. Order Management
+
+Customers should be able to place orders and view their order history.
+
+Administrators should be able to view and manage all orders.
+
+Implement the following order lifecycle:
+
+Pending → Confirmed → Processing → Shipped → Delivered.
+
+Also support order cancellation where appropriate.
+
+Prevent invalid status transitions. For example, a delivered order should not be moved back to processing without an explicitly defined administrative correction process.
+
+D. Inventory Management
+
+Implement a reliable inventory management system.
+
+Requirements:
+
+- Automatically update stock after successful orders.
+- Restore stock when an eligible order is cancelled.
+- Prevent negative stock quantities.
+- Prevent customers from ordering unavailable products.
+- Allow administrators to adjust stock manually.
+- Record every inventory adjustment.
+- Display low-stock warnings.
+
+E. Inventory Movement History
+
+Every inventory adjustment must generate a record containing:
+
+- Product affected.
+- Previous stock quantity.
+- New stock quantity.
+- Quantity added or removed.
+- Reason for the adjustment.
+- Administrator responsible.
+- Date and time of adjustment.
+
+F. Low-Stock Detection
+
+Implement a configurable minimum stock threshold for each product.
+
+Example:
+
+A product has 100 units in stock and a minimum stock threshold of 20.
+
+When the available stock drops to 15, the system should automatically identify it as low stock and display an appropriate warning in the admin dashboard.
+
+4. Problem-Solving and Algorithm Requirements
+
+These requirements are particularly important.
+
+Challenge 1: Stock Validation and Overselling Prevention
+
+Develop logic that ensures customers cannot purchase more products than are available.
+
+Your implementation must:
+
+- Validate stock before an order is accepted.
+- Prevent negative stock quantities.
+- Handle simultaneous orders safely.
+- Ensure stock is only deducted once for a successful order.
+- Handle failed transactions without leaving incorrect stock quantities.
+
+Explain why frontend validation alone is insufficient and how your database implementation prevents overselling.
+
+Challenge 2: Shopping Cart Calculations
+
+Implement accurate calculations for:
+
+- Product subtotals.
+- Total cart value.
+- Discounts.
+- Delivery fees.
+- Final order amount.
+
+Ensure calculations remain accurate when products or quantities change.
+
+Challenge 3: Inventory Adjustment Logic
+
+Implement a reusable function or service for inventory adjustments.
+
+It should calculate the previous quantity, new quantity, and difference while ensuring that invalid adjustments are rejected.
+
+Challenge 4: Order Status Validation
+
+Implement logic that determines whether an order can move from one status to another.
+
+Invalid transitions must be rejected with meaningful error messages.
+
+Challenge 5: Sales Analytics
+
+Implement basic analytics that calculate:
+
+- Total revenue.
+- Total orders.
+- Average order value.
+- Best-selling products.
+- Products with the lowest stock.
+- Daily or monthly sales summaries.
+
+Ensure cancelled or otherwise ineligible orders are handled correctly in your calculations.
+
+5. Technology Stack
+
+Use the following technologies:
+
+- React.
+- JavaScript or TypeScript.
+- React Router.
+- Tailwind CSS.
+- React Query (TanStack Query).
+- Zustand.
+- Supabase Authentication.
+- Supabase PostgreSQL.
+- Supabase Row Level Security (RLS).
+
+Use React Query for server state, API requests, caching, and mutations.
+
+Use Zustand for appropriate client-side state, particularly shopping cart and UI state.
+
+Supabase should handle authentication, database operations, and access control.
+
+Do not rely exclusively on frontend checks for security or inventory integrity.
+
+6. Suggested Database Structure
+
+Design an appropriate relational database containing at least the following tables:
+
+1. profiles
+2. products
+3. categories
+4. orders
+5. order_items
+6. inventory_movements
+7. notifications
+
+You are responsible for determining the appropriate columns, relationships, constraints, and indexes.
+
+Implement appropriate Row Level Security policies to ensure:
+
+- Customers can only access their own orders.
+- Customers cannot modify product inventory.
+- Administrators can manage products and inventory.
+- Users cannot grant themselves administrator privileges.
+- Sensitive administrative operations are properly restricted.
+
+Where necessary, use database functions or transactions to protect operations that must succeed or fail together.
+
+7. UI/UX Requirements
+
+The application must have a professional, consistent, and responsive interface.
+
+Pay particular attention to:
+
+- Consistent spacing and alignment.
+- Appropriate typography hierarchy.
+- Consistent margins and padding.
+- Reusable UI components.
+- Responsive layouts across desktop, tablet, and mobile.
+- Proper loading states.
+- Empty states.
+- Error states.
+- Success notifications.
+- Form validation.
+- Accessible labels and keyboard navigation.
+- Confirmation dialogs for destructive actions.
+
+Avoid unnecessary whitespace, inconsistent component sizing, and poorly aligned elements.
+
+Every page should be reviewed before submission.
+
+8. Code Quality Requirements
+
+Your implementation should demonstrate:
+
+- Reusable React components.
+- Proper separation of concerns.
+- Clean folder structure.
+- Appropriate custom hooks.
+- Proper API service organization.
+- Meaningful variable and function names.
+- Appropriate error handling.
+- Loading and pending states.
+- No unnecessary code duplication.
+- No hardcoded mock data in place of required backend functionality.
+
+Use Git throughout development and maintain meaningful commit messages.
+
+9. Testing Requirements
+
+Test the important functionality, including:
+
+- Authentication and role-based access.
+- Product creation and editing.
+- Shopping cart calculations.
+- Invalid product quantities.
+- Insufficient stock.
+- Order creation.
+- Order cancellation.
+- Inventory restoration.
+- Invalid order status transitions.
+- Low-stock detection.
+- Unauthorized database operations.
+
+Include tests for important business logic and edge cases.
+
+10. SEO and Accessibility
+
+Implement appropriate SEO practices where applicable:
+
+- Meaningful page titles.
+- Meta descriptions.
+- Semantic HTML.
+- Appropriate heading hierarchy.
+- Descriptive image alt text.
+- Accessible form controls.
+- Keyboard navigation.
+- Appropriate focus states.
+
+Consider how the public product catalogue can be made discoverable by search engines.
+
+11. Submission Requirements
+
+At the end of the project, submit:
+
+1. A fully functional deployed application.
+2. GitHub repository containing the source code.
+3. README with installation and setup instructions.
+4. Database schema and relationships.
+5. Explanation of the stock management algorithm.
+6. Explanation of how overselling is prevented.
+7. Explanation of the authentication and authorization implementation.
+8. Screenshots of the customer and admin dashboards.
+9. A short demonstration of the application.
+10. A summary of challenges encountered and how they were solved.
+
+You must be able to explain your implementation and justify your technical decisions during the final review.
+
+12. Evaluation Criteria
+
+Your work will be assessed using the following criteria:
+
+Assessment Area| Weight
+React architecture and component design| 15%
+UI/UX and attention to detail| 15%
+Supabase integration and security| 15%
+React Query and Zustand implementation| 10%
+Algorithmic problem-solving| 20%
+Error handling and edge cases| 10%
+Code quality and maintainability| 5%
+Responsiveness to feedback| 10%
+Total| 100%
+
+13. Important Working Instructions
+
+- Do not rush through implementation at the expense of quality.
+- Review requirements before starting each feature.
+- Research unfamiliar concepts and consult relevant documentation.
+- Do not simply copy code without understanding it.
+- Ask questions when requirements or technical concepts are unclear.
+- Test your implementation before requesting a review.
+- Keep track of corrections from every review and ensure they are implemented.
+- Do not mark a task as complete when outstanding corrections remain.
+- Communicate blockers before they affect your deadline.
+
+The ability to understand feedback, solve problems independently, and demonstrate continuous improvement is an important part of this assessment.
+
